@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Animating an Image's Mouth with JavaScript</title>
+    <style>
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <script>
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+
+      // Load the image
+      const img = new Image();
+      img.src = 'image1.png';
+
+      // Define the mouth position and size
+      let mouthX = 100;
+      let mouthY = 177;
+      let mouthWidth = 50;
+      let mouthHeight = 20;
+      let isMouthOpen = false;
+
+      // Draw the image and mouth on the canvas
+      function draw() {
+        // Clear the canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw the image
+        ctx.drawImage(img, 0, 0);
+
+        // Draw the mouth
+        ctx.fillStyle = 'red';
+        ctx.fillRect(mouthX, mouthY, mouthWidth, mouthHeight);
+      }
+
+      // Animate the mouth by changing its position and size
+      function animate() {
+        if (isMouthOpen) {
+          mouthHeight -= 2;
+          mouthY += 2;
+          if (mouthHeight <= 0) {
+            isMouthOpen = false;
+          }
+        } else {
+          mouthHeight += 2;
+          mouthY -= 2;
+          if (mouthHeight >= 20) {
+            isMouthOpen = true;
+          }
+        }
+
+        mouthX += 5;
+        if (mouthX > canvas.width - mouthWidth) {
+          mouthX = 0;
+        }
+        draw();
+      }
+
+      // Call the animate function repeatedly to create animation
+      setInterval(animate, 50);
+    </script>
+  </body>
+</html>
